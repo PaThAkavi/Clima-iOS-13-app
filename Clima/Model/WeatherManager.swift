@@ -23,18 +23,20 @@ struct WeatherManager {
         performRequest(with: urlString)
     }
     
+    func fetchWeather(latitude: Double, longitude: Double) {
+        let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
+        performRequest(with: urlString)
+    }
+    
     func performRequest(with urlString: String) {
         
         // 1. create a URL
-        
         if let url = URL(string: urlString) {  //to check if url is not empty
             
             // 2. create a URLSession
-            
             let session = URLSession(configuration: .default) //performs the networking
             
             // 3. give session a task
-            
             let task = session.dataTask(with: url) { (data, response, error) in //closure
                 if error != nil {
                     self.delegate?.didFailWithError(error: error!)
@@ -49,7 +51,6 @@ struct WeatherManager {
             }
             
             // 4. start the task
-            
             task.resume()
         }
     }
